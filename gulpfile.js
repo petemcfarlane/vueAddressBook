@@ -9,7 +9,7 @@ gulp.task('js', function() {
             debug: true,
             transform: [partialify]
         }))
-        //.pipe(uglify()) can't uglify when browserify in debug mode
+        //.pipe(uglify()) //can't uglify when browserify in debug mode
         .pipe(gulp.dest('./'));
 });
 

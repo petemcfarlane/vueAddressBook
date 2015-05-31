@@ -1,20 +1,52 @@
-<label class="form-inline">Search
-    <input v-model="search" class="form-control inline">
+<style>
+    .contact {
+        margin: 0;
+        padding: .5em;
+        transition: all .2s ease;
+        opacity: 1;
+        height: 34px;
+    }
+
+    .contact:nth-child(odd) {
+        background: #eaeaea;
+    }
+    .contact.fade-enter,
+    .contact.fade-leave {
+        opacity: 0;
+        height: 0;
+        padding: 0 .5em;
+    }
+</style>
+
+<label class="form-group">
+    <input v-model="search" class="form-control inline" placeholder="Search">
 </label>
 
-<ul class="table table-striped">
-    <li v-repeat="contacts | filterBy search | orderBy 'name'">
+<ul class="list-unstyled">
+    <li class="contact" v-repeat="contacts | filterBy search | orderBy 'name'" v-transition="fade">
         {{isCompany ? 'C' : 'P'}}
         {{name}}
         {{email}}
-        {{links.length}} {{links.length | pluralize link}}
+        <template v-if="links">
+            {{links.length}} {{links.length | pluralize link}}
+        </template>
     </li>
 </ul>
 
-<div class="form-inline">
-    <label>
-        Add New Contact
-        <input v-model="contactName" v-on="keydown: addContact | key enter" class="form-control">
-    </label>
+<div class="well">
+    <h3>Add New Contact</h3>
+    <div class="form-group">
+        <label>
+            Contact Name
+            <input v-model="contactName" v-on="keydown: addContact | key enter" class="form-control">
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input v-model="isCompany" type="checkbox">
+            Is Company?
+        </label>
+    </div>
+
     <button v-on="click: addContact" class="btn btn-default">Add</button>
 </div>

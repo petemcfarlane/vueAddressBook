@@ -5,10 +5,10 @@ module.exports = {
     replace: true,
     data: function () {
         return {
-            msg: 'I am component A!',
             search: '',
             contacts: [],
-            newContactName: ''
+            newContactName: '',
+            isCompany: true
         }
     },
     ready: function () {
@@ -25,8 +25,12 @@ module.exports = {
     },
     methods: {
         addContact: function () {
-            this.contacts.push({name: this.contactName});
+            this.contacts.push({
+                name: this.contactName,
+                isCompany: this.isCompany
+            });
             this.contactName = '';
+            this.isCompany = true;
         }
     }
 };
