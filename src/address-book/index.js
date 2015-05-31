@@ -7,32 +7,55 @@ module.exports = {
         return {
             search: '',
             contacts: [],
-            newContactName: '',
-            isCompany: true
+            newContact: {
+                name: '',
+                isCompany: true
+            }
         }
     },
     ready: function () {
         var addressBook = this;
-        request('get', 'contacts.json')
+        request
+            .get('http://localhost:8000/contact')
+            .auth('test@user.com', 'password')
             .accept('json')
+            .set('X-Requested-With', 'XMLHttpRequest')
             .end(function (err, res) {
                 if (res.ok) {
                     addressBook.contacts = addressBook.contacts.concat(JSON.parse(res.text));
                 } else {
                     alert('Oh no! error ' + res.status + ' ' + res.statusText);
                 }
-            }
-        );
+            });
     },
     methods: {
         addContact: function () {
-            if (this.contactName) {
-                this.contacts.push({
-                    name: this.contactName,
-                    isCompany: this.isCompany
-                });
-                this.contactName = '';
-                this.isCompany = true;
+            var contacts = this.contacts,
+                newContact = {
+                    name: this.newContact.name,
+                    is_company: this.newContact.isCompany
+                },
+                newContactForm = this.newContact,
+                resetInput = function () {
+                    newContactForm.name = '';
+                    newContactForm.isCompany = true;
+                };
+
+            if (newContact.name) {
+                request
+                    .post('http://localhost:8000/contact')
+                    .auth('test@user.com', 'password')
+                    .accept('json')
+                    .set('X-Requested-With', 'XMLHttpRequest')
+                    .send(newContact)
+                    .end(function (err, res) {
+                        if (res.ok) {
+                            contacts.push(newContact);
+                            resetInput();
+                        } else {
+                            alert('Oh no! error ' + res.status + ' ' + res.statusText);
+                        }
+                    });
             }
         }
     }

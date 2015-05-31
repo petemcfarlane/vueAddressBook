@@ -24,7 +24,7 @@
 
 <ul class="list-unstyled">
     <li class="contact" v-repeat="contacts | filterBy search | orderBy 'name'" v-transition="fade">
-        {{isCompany ? 'C' : 'P'}}
+        {{is_company ? 'C' : 'P'}}
         {{name}}
         {{email}}
         <template v-if="links">
@@ -38,12 +38,12 @@
     <div class="form-group">
         <label>
             Contact Name
-            <input v-model="contactName" v-on="keydown: addContact | key enter" class="form-control">
+            <input v-model="newContact.name" v-on="keydown: addContact | key enter" class="form-control">
         </label>
     </div>
     <div class="checkbox">
         <label>
-            <input v-model="isCompany" type="checkbox">
+            <input v-model="newContact.isCompany" type="checkbox">
             Is Company?
         </label>
     </div>
