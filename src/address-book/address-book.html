@@ -1,0 +1,20 @@
+<label class="form-inline">Search
+    <input v-model="search" class="form-control inline">
+</label>
+
+<ul class="table table-striped">
+    <li v-repeat="contacts | filterBy search | orderBy 'name'">
+        {{isCompany ? 'C' : 'P'}}
+        {{name}}
+        {{email}}
+        {{links.length}} {{links.length | pluralize link}}
+    </li>
+</ul>
+
+<div class="form-inline">
+    <label>
+        Add New Contact
+        <input v-model="contactName" v-on="keydown: addContact | key enter" class="form-control">
+    </label>
+    <button v-on="click: addContact" class="btn btn-default">Add</button>
+</div>
