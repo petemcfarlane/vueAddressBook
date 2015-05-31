@@ -1,0 +1,18 @@
+[
+  {
+    "name": "Bob",
+    "isCompany": true,
+    "links": []
+  },
+  {
+    "name": "Tom",
+    "isCompany": false,
+    "email": "tom@work.com",
+    "links": ["one", "two", "three"]
+  },
+  {
+    "name": "Harry",
+    "isCompany": true,
+    "links": ["one"]
+  }
+]
