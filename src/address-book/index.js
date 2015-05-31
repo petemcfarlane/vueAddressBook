@@ -16,21 +16,24 @@ module.exports = {
         request('get', 'contacts.json')
             .accept('json')
             .end(function (err, res) {
-            if (res.ok) {
-                addressBook.contacts = addressBook.contacts.concat(res.body);
-            } else {
-                alert('Oh no! error ' + res.status + ' ' + res.statusText);
+                if (res.ok) {
+                    addressBook.contacts = addressBook.contacts.concat(JSON.parse(res.text));
+                } else {
+                    alert('Oh no! error ' + res.status + ' ' + res.statusText);
+                }
             }
-        });
+        );
     },
     methods: {
         addContact: function () {
-            this.contacts.push({
-                name: this.contactName,
-                isCompany: this.isCompany
-            });
-            this.contactName = '';
-            this.isCompany = true;
+            if (this.contactName) {
+                this.contacts.push({
+                    name: this.contactName,
+                    isCompany: this.isCompany
+                });
+                this.contactName = '';
+                this.isCompany = true;
+            }
         }
     }
 };
